@@ -27,8 +27,20 @@ namespace GeneticAlgorithm.Classes
         // Sum of all chromosome's Accumulated Fitness
         public double AccumulatedFitness => Chromosomes.Last().NormalizedFitness;
 
-        public Chromosome BestChromosome { get; set; }
-        public Chromosome AverageChromosome { get; set; }
+        public Chromosome BestChromosome
+        {
+            get { return Chromosomes.First(m => m.FitnessValue == Chromosomes.Max(x => x.FitnessValue)); }
+        }
+        public double BestFitness
+        {
+            get { return Chromosomes.Max(x => x.FitnessValue); }
+        }
+
+        public double AverageFitness
+        {
+            get { return Chromosomes.Sum(m => m.FitnessValue)/Chromosomes.Count; }
+        }
+
         #endregion
 
         #region Constructor
@@ -83,22 +95,28 @@ namespace GeneticAlgorithm.Classes
         #region Genetic Algorithm Operations Helpers
         public void PerformCrossOver(Random random)
         {
-            var firstParent = Chromosomes.First(m => m.AccumulatedFitness > random.NextDouble());
-            var secondParent = Chromosomes.First(m => m.AccumulatedFitness > random.NextDouble());
-
+            var firstParent = Chromosomes.FirstOrDefault(m => m.AccumulatedFitness > random.NextDouble());
+            var secondParent = Chromosomes.FirstOrDefault(m => m.AccumulatedFitness > random.NextDouble());
+            if (firstParent != null)
+            {
+                var firstOffSpring = new Chromosome
+                {
+                    ValueX = firstParent.ValueX,
+                    ValueY = secondParent.ValueY,
+                };
+                Chromosomes.Add(firstOffSpring);
+            }
             // Create OffSprings
-            var firstOffSpring = new Chromosome
+            if (secondParent != null)
             {
-                ValueX = firstParent.ValueX,
-                ValueY = secondParent.ValueY,
-            };
-            var secondOffspring = new Chromosome
-            {
-                ValueX = firstParent.ValueY,
-                ValueY = secondParent.ValueX,
-            };
-            Chromosomes.Add(firstOffSpring);
-            Chromosomes.Add(secondOffspring);
+                var secondOffspring = new Chromosome
+                {
+                    ValueX = firstParent.ValueY,
+                    ValueY = secondParent.ValueX,
+                };
+
+                Chromosomes.Add(secondOffspring);
+            }
         }
 
         public void PerformMutation(Random random, double mutationFactor)
