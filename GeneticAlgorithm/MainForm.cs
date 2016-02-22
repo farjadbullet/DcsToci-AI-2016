@@ -43,6 +43,8 @@ namespace GeneticAlgorithm
 
                 // Perform GA Operations
                 List<GraphMapper> bestOfIteration = new List<GraphMapper>();
+                List<GraphMapper> worstOfIteration = new List<GraphMapper>();
+                List<GraphMapper> averageOfIteration = new List<GraphMapper>();
                 initialPopulation.CalculateNormalizedFitness();
                 initialPopulation.OrderChromosomesDescending();
                 initialPopulation.CalculateAccumulatedFitness();
@@ -59,10 +61,40 @@ namespace GeneticAlgorithm
                         Category = "G " + (j + 1).ToString(),
                         Value = initialPopulation.BestFitness,
                     });
+                    worstOfIteration.Add(new GraphMapper
+                    {
+                        Category = "G " + (j + 1).ToString(),
+                        Value = initialPopulation.WorstFitness,
+                    });
+
+                    averageOfIteration.Add(new GraphMapper
+                    {
+                        Category = "G " + (j + 1).ToString(),
+                        Value = initialPopulation.AverageFitness,
+                    });
 
                 }
 
                 #endregion
+
+                List<SeriesMapper> listOfSeries = new List<SeriesMapper>
+                {
+                    new SeriesMapper
+                    {
+                        Category = "Best of Iteration",
+                        GraphDataSource = bestOfIteration,
+                    },
+                    new SeriesMapper
+                    {
+                        Category = "Worst of Iteration",
+                        GraphDataSource = worstOfIteration,
+                    },
+                    new SeriesMapper
+                    {
+                        Category = "Average of Iteration",
+                        GraphDataSource = averageOfIteration,
+                    }
+                };
 
                 // Add Best And Average Result to respective lists
                 averageResult.Add(initialPopulation.Chromosomes.Sum(m => m.FitnessValue) /
@@ -72,7 +104,12 @@ namespace GeneticAlgorithm
                 #region Add Charts dynamically to Form
 
                 CartesianArea cartesianArea1 = new CartesianArea();
-                var height = 700 * i;
+                int height = 0;
+                if (i > 0)
+                {
+                    height = this.Controls[i - 1].Height + this.Controls[i - 1].Location.Y;
+                }
+
                 RadChartView chart = new RadChartView
                 {
                     AreaDesign = cartesianArea1,
@@ -84,25 +121,45 @@ namespace GeneticAlgorithm
                     Size = new Size(1300, 700),
                     TabIndex = 0,
                     Text = "radChartView1",
+                    Title = "Iteration " + i.ToString(),
+                    ShowTitle = true,
                     //ThemeName = visualStudio2012DarkTheme1.ThemeName,
                     ShowLegend = true,
 
                 };
-                LineSeries lineSeries = new LineSeries();
-                var dataSource = bestOfIteration;
-                lineSeries.LegendTitle = "Population " + (i + 1);
-                //lineSeries.IsVisibleInLegend = true;
-                lineSeries.PointSize = new SizeF(10, 10);
-                lineSeries.BorderWidth = 2;
-                lineSeries.CategoryMember = "Category";
-                lineSeries.ValueMember = "Value";
-                lineSeries.DataSource = dataSource;
-                lineSeries.ShowLabels = true;
-                lineSeries.CombineMode = ChartSeriesCombineMode.None;
-                chart.Series.Add(lineSeries);
-                chart.ShowSmartLabels = true;
+                foreach (SeriesMapper graphMappers in listOfSeries)
+                {
+                    LineSeries series = new LineSeries
+                    {
+                        LegendTitle = graphMappers.Category,
+                        PointSize = new SizeF(10, 10),
+                        BorderWidth = 2,
+                        CategoryMember = "Category",
+                        ValueMember = "Value",
+                        DataSource = graphMappers.GraphDataSource,
+                        ShowLabels = true,
+                        CombineMode = ChartSeriesCombineMode.None
+                    };
+                    chart.Series.Add(series);
+                    chart.ShowSmartLabels = true;
 
-                ((CartesianArea)chart.View.Area).ShowGrid = true;
+                    ((CartesianArea)chart.View.Area).ShowGrid = true;
+                }
+                //LineSeries lineSeries = new LineSeries();
+                //var dataSource = bestOfIteration;
+                //lineSeries.LegendTitle = "Population " + (i + 1);
+                ////lineSeries.IsVisibleInLegend = true;
+                //lineSeries.PointSize = new SizeF(10, 10);
+                //lineSeries.BorderWidth = 2;
+                //lineSeries.CategoryMember = "Category";
+                //lineSeries.ValueMember = "Value";
+                //lineSeries.DataSource = dataSource;
+                //lineSeries.ShowLabels = true;
+                //lineSeries.CombineMode = ChartSeriesCombineMode.None;
+                //chart.Series.Add(lineSeries);
+                //chart.ShowSmartLabels = true;
+
+                //((CartesianArea)chart.View.Area).ShowGrid = true;
 
                 this.Controls.Add(chart);
 
@@ -111,20 +168,23 @@ namespace GeneticAlgorithm
 
             #region Best of All Chart
 
+            var heightOfPreviousChart = this.Controls[this.Controls.Count - 1].Height +
+                                        this.Controls[this.Controls.Count - 1].Location.Y;
             RadChartView chartForBestOfIterations = new RadChartView
             {
                 AreaDesign = new CartesianArea(),
                 //Anchor = AnchorStyles.Left,
                 //Dock = DockStyle.Fill,
-                Location = new Point(0, 700 * 20),
+                Location = new Point(0, heightOfPreviousChart),
                 Name = "radChartView1",
                 ShowGrid = true,
                 Size = new Size(1300, 700),
                 TabIndex = 0,
+                Title = "Best of all Iterations",
+                ShowTitle = true,
                 Text = "radChartView1",
                 //ThemeName = visualStudio2012DarkTheme1.ThemeName,
                 ShowLegend = true,
-
             };
             var dataSourceForBestResultsGraph = new List<GraphMapper>();
             int counter = 1;
@@ -164,10 +224,12 @@ namespace GeneticAlgorithm
                 AreaDesign = new CartesianArea(),
                 //Anchor = AnchorStyles.Left,
                 //Dock = DockStyle.Fill,
-                Location = new Point(0, 700 * 21),
+                Location = new Point(0, chartForBestOfIterations.Height + chartForBestOfIterations.Location.Y),
                 Name = "radChartView1",
                 ShowGrid = true,
                 Size = new Size(1300, 700),
+                Title = "Average of all Iterations",
+                ShowTitle = true,
                 TabIndex = 0,
                 Text = "radChartView1",
                 //ThemeName = visualStudio2012DarkTheme1.ThemeName,
@@ -216,4 +278,10 @@ namespace GeneticAlgorithm
         public string Category { get; set; }
         public double Value { get; set; }
     }
+    public class SeriesMapper
+    {
+        public string Category { get; set; }
+        public List<GraphMapper> GraphDataSource { get; set; }
+    }
 }
+

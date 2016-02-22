@@ -8,7 +8,7 @@ namespace GeneticAlgorithm.Classes
     {
         public double ValueX { get; set; }
         public double ValueY { get; set; }
-        public double FitnessValue => Math.Abs((2 * ValueX) + (3 * ValueY));
+        public double FitnessValue => (ValueX * ValueX) + (ValueY * ValueY);
         public double NormalizedFitness { get; set; }
         public double AccumulatedFitness { get; set; }
     }
@@ -38,7 +38,12 @@ namespace GeneticAlgorithm.Classes
 
         public double AverageFitness
         {
-            get { return Chromosomes.Sum(m => m.FitnessValue)/Chromosomes.Count; }
+            get { return Chromosomes.Sum(m => m.FitnessValue) / Chromosomes.Count; }
+        }
+
+        public double WorstFitness
+        {
+            get { return Chromosomes.Min(m => m.FitnessValue); }
         }
 
         #endregion
@@ -97,7 +102,7 @@ namespace GeneticAlgorithm.Classes
         {
             var firstParent = Chromosomes.FirstOrDefault(m => m.AccumulatedFitness > random.NextDouble());
             var secondParent = Chromosomes.FirstOrDefault(m => m.AccumulatedFitness > random.NextDouble());
-            if (firstParent != null)
+            if (firstParent != null && secondParent != null)
             {
                 var firstOffSpring = new Chromosome
                 {
@@ -107,7 +112,7 @@ namespace GeneticAlgorithm.Classes
                 Chromosomes.Add(firstOffSpring);
             }
             // Create OffSprings
-            if (secondParent != null)
+            if (secondParent != null && firstParent != null)
             {
                 var secondOffspring = new Chromosome
                 {
