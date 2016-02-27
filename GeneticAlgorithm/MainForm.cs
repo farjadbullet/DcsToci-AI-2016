@@ -113,19 +113,15 @@ namespace GeneticAlgorithm
                 RadChartView chart = new RadChartView
                 {
                     AreaDesign = cartesianArea1,
-                    //Anchor = AnchorStyles.Left,
-                    //Dock = DockStyle.Fill,
                     Location = new Point(0, height),
                     Name = "radChartView1",
                     ShowGrid = true,
                     Size = new Size(1300, 700),
                     TabIndex = 0,
                     Text = "radChartView1",
-                    Title = "Iteration " + i.ToString(),
+                    Title = "Iteration " + (i + 1).ToString(),
                     ShowTitle = true,
-                    //ThemeName = visualStudio2012DarkTheme1.ThemeName,
                     ShowLegend = true,
-
                 };
                 foreach (SeriesMapper graphMappers in listOfSeries)
                 {

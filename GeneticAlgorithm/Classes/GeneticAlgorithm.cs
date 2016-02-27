@@ -6,8 +6,48 @@ namespace GeneticAlgorithm.Classes
 {
     public class Chromosome
     {
-        public double ValueX { get; set; }
-        public double ValueY { get; set; }
+        private double _valueX;
+        public double ValueX
+        {
+            get { return _valueX; }
+            set
+            {
+                if (value > 2)
+                {
+                    _valueX = 2;
+                }
+                else if (value < -2)
+                {
+                    _valueX = -2;
+                }
+                else
+                {
+                    _valueX = value;
+                }
+            }
+        }
+
+        private double _valueY;
+
+        public double ValueY
+        {
+            get { return _valueY; }
+            set
+            {
+                if (value > 5)
+                {
+                    _valueY = 5;
+                }
+                else if (value < -5)
+                {
+                    _valueY = -5;
+                }
+                else
+                {
+                    _valueY = value;
+                }
+            }
+        }
         public double FitnessValue => (ValueX * ValueX) + (ValueY * ValueY);
         public double NormalizedFitness { get; set; }
         public double AccumulatedFitness { get; set; }
