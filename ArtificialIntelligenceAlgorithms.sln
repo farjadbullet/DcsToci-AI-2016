@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticAlgorithm", "Genetic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingApp", "TestingApp\TestingApp.csproj", "{7974A975-EA5E-4352-96EB-69FD1C00B622}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParticleSwarmOptimization", "ParticleSwarmOptimization\ParticleSwarmOptimization.csproj", "{43414F83-C02F-498E-82EE-D2B42D857983}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,14 @@ Global
 		{7974A975-EA5E-4352-96EB-69FD1C00B622}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7974A975-EA5E-4352-96EB-69FD1C00B622}.Release|x86.ActiveCfg = Release|Any CPU
 		{7974A975-EA5E-4352-96EB-69FD1C00B622}.Release|x86.Build.0 = Release|Any CPU
+		{43414F83-C02F-498E-82EE-D2B42D857983}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43414F83-C02F-498E-82EE-D2B42D857983}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43414F83-C02F-498E-82EE-D2B42D857983}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{43414F83-C02F-498E-82EE-D2B42D857983}.Debug|x86.Build.0 = Debug|Any CPU
+		{43414F83-C02F-498E-82EE-D2B42D857983}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43414F83-C02F-498E-82EE-D2B42D857983}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43414F83-C02F-498E-82EE-D2B42D857983}.Release|x86.ActiveCfg = Release|Any CPU
+		{43414F83-C02F-498E-82EE-D2B42D857983}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
