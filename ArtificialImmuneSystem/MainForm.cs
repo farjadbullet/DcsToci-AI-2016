@@ -3,27 +3,23 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using GeneticAlgorithm.Classes;
+using ArtificialImmuneSystem.Classes;
 using Telerik.Charting;
-using Telerik.WinControls;
 using Telerik.WinControls.UI;
 
-namespace GeneticAlgorithm
+namespace ArtificialImmuneSystem
 {
-
-    public partial class MainForm : RadForm
+    public partial class MainForm : Form
     {
         public MainForm()
         {
             InitializeComponent();
-
+            InitGraphs();
         }
-
 
         public void InitGraphs()
         {
@@ -38,11 +34,9 @@ namespace GeneticAlgorithm
             var averageResult = new List<double>();
 
             for (int i = 0; i < 20; i++)
+
             {
                 Population initialPopulation = new Population(random);
-                #region Perform GA Operations
-
-                // Perform GA Operations
                 List<GraphMapper> bestOfIteration = new List<GraphMapper>();
                 List<GraphMapper> worstOfIteration = new List<GraphMapper>();
                 List<GraphMapper> averageOfIteration = new List<GraphMapper>();
@@ -51,12 +45,17 @@ namespace GeneticAlgorithm
                 initialPopulation.CalculateAccumulatedFitness();
                 for (int j = 0; j < 20; j++)
                 {
-                    initialPopulation.PerformCrossOver(random);
-                    if (j % 2 == 0)
-                    {
-                        initialPopulation.PerformMutation(random, random.NextDouble());
-                    }
-                    initialPopulation.PerformTruncation();
+                    #region Perform GA Operations
+
+                    // Perform GA Operations
+                    
+
+                    initialPopulation.CloneElements();
+                    initialPopulation.PerformMutation(random);
+                    initialPopulation.Production(10, random);
+
+
+
                     bestOfIteration.Add(new GraphMapper
                     {
                         Category = "G " + (j + 1).ToString(),
@@ -74,9 +73,10 @@ namespace GeneticAlgorithm
                         Value = initialPopulation.AverageFitness,
                     });
 
+
+                    #endregion
                 }
 
-                #endregion
 
                 List<SeriesMapper> listOfSeries = new List<SeriesMapper>
                 {
@@ -159,7 +159,7 @@ namespace GeneticAlgorithm
                 //((CartesianArea)chart.View.Area).ShowGrid = true;
 
                 this.Controls.Add(chart);
-                chart.ExportToImage(@"C:\Users\Farjad\Desktop\TOCI2\EA\" + chart.Title + ".png", chart.Size);
+                chart.ExportToImage(@"C:\Users\Farjad\Desktop\TOCI2\AIS\" + chart.Title + ".png", chart.Size);
 
                 #endregion
             }
@@ -213,7 +213,7 @@ namespace GeneticAlgorithm
             ((CartesianArea)chartForBestOfIterations.View.Area).ShowGrid = true;
 
             this.Controls.Add(chartForBestOfIterations);
-            chartForBestOfIterations.ExportToImage(@"C:\Users\Farjad\Desktop\TOCI2\EA\" + chartForBestOfIterations.Title + ".png", chartForBestOfIterations.Size);
+            chartForBestOfIterations.ExportToImage(@"C:\Users\Farjad\Desktop\TOCI2\AIS\" + chartForBestOfIterations.Title + ".png", chartForBestOfIterations.Size);
             #endregion
 
             #region Average of All Chart
@@ -264,24 +264,8 @@ namespace GeneticAlgorithm
             ((CartesianArea)chartForAverageOfIterations.View.Area).ShowGrid = true;
 
             this.Controls.Add(chartForAverageOfIterations);
-            chartForAverageOfIterations.ExportToImage(@"C:\Users\Farjad\Desktop\TOCI2\EA\" + chartForAverageOfIterations.Title + ".png", chartForAverageOfIterations.Size);
+            chartForAverageOfIterations.ExportToImage(@"C:\Users\Farjad\Desktop\TOCI2\AIS\" + chartForAverageOfIterations.Title + ".png", chartForAverageOfIterations.Size);
             #endregion
         }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            InitGraphs();
-        }
-    }
-    public class GraphMapper
-    {
-        public string Category { get; set; }
-        public double Value { get; set; }
-    }
-    public class SeriesMapper
-    {
-        public string Category { get; set; }
-        public List<GraphMapper> GraphDataSource { get; set; }
     }
 }
-
