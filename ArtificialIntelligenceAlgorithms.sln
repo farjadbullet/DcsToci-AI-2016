@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneticAlgorithm", "GeneticAlgorithm\GeneticAlgorithm.csproj", "{3DB43E06-D7DF-4F8A-AF94-85612BC4E0CC}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParticleSwarmOptimization", "ParticleSwarmOptimization\ParticleSwarmOptimization.csproj", "{43414F83-C02F-498E-82EE-D2B42D857983}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtificialImmuneSystem", "ArtificialImmuneSystem\ArtificialImmuneSystem.csproj", "{6F62B147-7B44-4A05-A9A1-BAB2E5B205A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackPropagationAlgorithm", "BackPropagationAlgorithm\BackPropagationAlgorithm.csproj", "{82E7AE01-0B67-4EE2-9493-FEAD6EDC75BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntColonyAlgorithm", "AntColonyAlgorithm\AntColonyAlgorithm.csproj", "{314D5292-778F-4C1D-8A93-D83A429A4716}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,18 @@ Global
 		{6F62B147-7B44-4A05-A9A1-BAB2E5B205A9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F62B147-7B44-4A05-A9A1-BAB2E5B205A9}.Release|x86.ActiveCfg = Release|Any CPU
 		{6F62B147-7B44-4A05-A9A1-BAB2E5B205A9}.Release|x86.Build.0 = Release|Any CPU
+		{82E7AE01-0B67-4EE2-9493-FEAD6EDC75BE}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{82E7AE01-0B67-4EE2-9493-FEAD6EDC75BE}.Debug|x86.ActiveCfg = Debug|x86
+		{82E7AE01-0B67-4EE2-9493-FEAD6EDC75BE}.Debug|x86.Build.0 = Debug|x86
+		{82E7AE01-0B67-4EE2-9493-FEAD6EDC75BE}.Release|Any CPU.ActiveCfg = Release|x86
+		{82E7AE01-0B67-4EE2-9493-FEAD6EDC75BE}.Release|x86.ActiveCfg = Release|x86
+		{82E7AE01-0B67-4EE2-9493-FEAD6EDC75BE}.Release|x86.Build.0 = Release|x86
+		{314D5292-778F-4C1D-8A93-D83A429A4716}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{314D5292-778F-4C1D-8A93-D83A429A4716}.Debug|x86.ActiveCfg = Debug|x86
+		{314D5292-778F-4C1D-8A93-D83A429A4716}.Debug|x86.Build.0 = Debug|x86
+		{314D5292-778F-4C1D-8A93-D83A429A4716}.Release|Any CPU.ActiveCfg = Release|x86
+		{314D5292-778F-4C1D-8A93-D83A429A4716}.Release|x86.ActiveCfg = Release|x86
+		{314D5292-778F-4C1D-8A93-D83A429A4716}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
