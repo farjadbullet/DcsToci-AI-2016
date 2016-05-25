@@ -24,12 +24,11 @@ namespace GeneticAlgorithm
 
         }
 
-
-        public void InitGraphs()
+        private void InitGraphs()
         {
             Random random = new Random();
             // Initial Population
-            
+
 
             // List to store best of every iteration
             var bestResult = new List<double>();
