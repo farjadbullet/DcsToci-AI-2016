@@ -24,8 +24,8 @@ namespace ArtificialImmuneSystem
         public void InitGraphs()
         {
             Random random = new Random();
+
             // Initial Population
-            
 
             // List to store best of every iteration
             var bestResult = new List<double>();
@@ -34,7 +34,6 @@ namespace ArtificialImmuneSystem
             var averageResult = new List<double>();
 
             for (int i = 0; i < 20; i++)
-
             {
                 Population initialPopulation = new Population(random);
                 List<GraphMapper> bestOfIteration = new List<GraphMapper>();
@@ -48,7 +47,7 @@ namespace ArtificialImmuneSystem
                     #region Perform GA Operations
 
                     // Perform GA Operations
-                    
+
 
                     initialPopulation.CloneElements();
                     initialPopulation.PerformMutation(random);
@@ -99,7 +98,7 @@ namespace ArtificialImmuneSystem
 
                 // Add Best And Average Result to respective lists
                 averageResult.Add(initialPopulation.Chromosomes.Sum(m => m.FitnessValue) /
-                        initialPopulation.Chromosomes.Count);
+                                  initialPopulation.Chromosomes.Count);
                 bestResult.Add(initialPopulation.Chromosomes.Max(m => m.FitnessValue));
 
                 #region Add Charts dynamically to Form
@@ -142,21 +141,6 @@ namespace ArtificialImmuneSystem
 
                     ((CartesianArea)chart.View.Area).ShowGrid = true;
                 }
-                //LineSeries lineSeries = new LineSeries();
-                //var dataSource = bestOfIteration;
-                //lineSeries.LegendTitle = "Population " + (i + 1);
-                ////lineSeries.IsVisibleInLegend = true;
-                //lineSeries.PointSize = new SizeF(10, 10);
-                //lineSeries.BorderWidth = 2;
-                //lineSeries.CategoryMember = "Category";
-                //lineSeries.ValueMember = "Value";
-                //lineSeries.DataSource = dataSource;
-                //lineSeries.ShowLabels = true;
-                //lineSeries.CombineMode = ChartSeriesCombineMode.None;
-                //chart.Series.Add(lineSeries);
-                //chart.ShowSmartLabels = true;
-
-                //((CartesianArea)chart.View.Area).ShowGrid = true;
 
                 this.Controls.Add(chart);
                 chart.ExportToImage(@"C:\Users\Farjad\Desktop\TOCI2\AIS\" + chart.Title + ".png", chart.Size);
@@ -171,8 +155,6 @@ namespace ArtificialImmuneSystem
             RadChartView chartForBestOfIterations = new RadChartView
             {
                 AreaDesign = new CartesianArea(),
-                //Anchor = AnchorStyles.Left,
-                //Dock = DockStyle.Fill,
                 Location = new Point(0, heightOfPreviousChart),
                 Name = "radChartView1",
                 ShowGrid = true,
@@ -181,7 +163,6 @@ namespace ArtificialImmuneSystem
                 Title = "Best of all Iterations",
                 ShowTitle = true,
                 Text = "radChartView1",
-                //ThemeName = visualStudio2012DarkTheme1.ThemeName,
                 ShowLegend = true,
             };
             var dataSourceForBestResultsGraph = new List<GraphMapper>();
@@ -206,14 +187,16 @@ namespace ArtificialImmuneSystem
                 ShowLabels = true,
                 CombineMode = ChartSeriesCombineMode.None
             };
-            //lineSeries.IsVisibleInLegend = true;
             chartForBestOfIterations.Series.Add(lineSeriesForBestOfIteration);
             chartForBestOfIterations.ShowSmartLabels = true;
 
             ((CartesianArea)chartForBestOfIterations.View.Area).ShowGrid = true;
 
             this.Controls.Add(chartForBestOfIterations);
-            chartForBestOfIterations.ExportToImage(@"C:\Users\Farjad\Desktop\TOCI2\AIS\" + chartForBestOfIterations.Title + ".png", chartForBestOfIterations.Size);
+            chartForBestOfIterations.ExportToImage(
+                @"C:\Users\Farjad\Desktop\TOCI2\AIS\" + chartForBestOfIterations.Title + ".png",
+                chartForBestOfIterations.Size);
+
             #endregion
 
             #region Average of All Chart
@@ -231,7 +214,6 @@ namespace ArtificialImmuneSystem
                 ShowTitle = true,
                 TabIndex = 0,
                 Text = "radChartView1",
-                //ThemeName = visualStudio2012DarkTheme1.ThemeName,
                 ShowLegend = true,
 
             };
@@ -257,14 +239,16 @@ namespace ArtificialImmuneSystem
                 ShowLabels = true,
                 CombineMode = ChartSeriesCombineMode.None
             };
-            //lineSeries.IsVisibleInLegend = true;
             chartForAverageOfIterations.Series.Add(lineSeriesForAverageOfIteration);
             chartForAverageOfIterations.ShowSmartLabels = true;
 
             ((CartesianArea)chartForAverageOfIterations.View.Area).ShowGrid = true;
 
             this.Controls.Add(chartForAverageOfIterations);
-            chartForAverageOfIterations.ExportToImage(@"C:\Users\Farjad\Desktop\TOCI2\AIS\" + chartForAverageOfIterations.Title + ".png", chartForAverageOfIterations.Size);
+            chartForAverageOfIterations.ExportToImage(
+                @"C:\Users\Farjad\Desktop\TOCI2\AIS\" + chartForAverageOfIterations.Title + ".png",
+                chartForAverageOfIterations.Size);
+
             #endregion
         }
     }
