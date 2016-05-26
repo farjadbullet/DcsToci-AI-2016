@@ -130,13 +130,8 @@ namespace ParticleSwarmOptimization.Classes
         }
         public void CalculateVelocity()
         {
-            var q = NextDouble(new Random(), 0, 1);
-            var x = 2*NextDouble(new Random(), 0, 1);
-            var y = (LocalBest - new Vector<double>(ValueX, ValueY));
-            var z = (2*NextDouble(new Random(), 0, 1)*(GlobalBest - new Vector<double>(ValueX, ValueY)));
-            Velocity = Velocity +
-                   (2 * NextDouble(new Random(), 0, 1) * (LocalBest - new Vector<double>(ValueX, ValueY)))
-                   + (2 * NextDouble(new Random(), 0, 1) * (GlobalBest - new Vector<double>(ValueX, ValueY)));
+            Velocity += (2*NextDouble(new Random(), 0, 1)*(LocalBest - new Vector<double>(ValueX, ValueY))) +
+                        (2*NextDouble(new Random(), 0, 1)*(GlobalBest - new Vector<double>(ValueX, ValueY)));
         }
 
         public void UpdatePosition()
