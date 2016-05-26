@@ -60,7 +60,7 @@ namespace BackPropagationAlgorithm.Classes
 
         public Neuron OutputNeuron { get; set; }
 
-        public double RosenBack => (NeuronX.Value * NeuronX.Value + NeuronY.Value * NeuronY.Value).Sigmoid();
+        public double RosenBack => (NeuronX.Value * NeuronX.Value + NeuronY.Value * NeuronY.Value);
 
         public NeuralNetwork()
         {
@@ -78,55 +78,60 @@ namespace BackPropagationAlgorithm.Classes
                 WeightY = NextDouble(random, 0, 1)
             };
 
-            // Generate Hidden Neurons using initial Neurons
-            GenerateHiddenLayer(random);
+            var weightForHiddenNeuron = NextDouble(random, 0, 1);
+            HiddenNeuronX = new Neuron(-2, 2)
+            {
+                //Value = ((NeuronX.Value * NeuronX.WeightX) + NeuronY.Value - NeuronY.WeightX).Sigmoid(),
+                WeightX = weightForHiddenNeuron,
+                WeightY = weightForHiddenNeuron
+            };
 
-            // Generate Output Neuron
-            GenerateOutputNeuron();
+            weightForHiddenNeuron = NextDouble(random, 0, 1);
+            HiddenNeuronY = new Neuron(-5, 5)
+            {
+                //Value = ((NeuronX.Value * NeuronX.WeightY) + NeuronY.Value - NeuronY.WeightY).Sigmoid(),
+                WeightX = weightForHiddenNeuron,
+                WeightY = weightForHiddenNeuron
+            };
+
+            OutputNeuron = new Neuron(-29, 29);
+
+            //// Generate Hidden Neurons using initial Neurons
+            //GenerateHiddenLayer(random);
+
+            //// Generate Output Neuron
+            //GenerateOutputNeuron();
         }
 
         public void GenerateOutputNeuron()
         {
-            OutputNeuron = new Neuron
-            {
-                Value =
-                    (HiddenNeuronX.Value * HiddenNeuronX.WeightY + HiddenNeuronY.Value - HiddenNeuronY.WeightY).Sigmoid(),
-            };
+            OutputNeuron.Value =
+                ((HiddenNeuronX.Value * HiddenNeuronX.WeightX) + (HiddenNeuronY.Value * HiddenNeuronY.WeightY)).Sigmoid();
         }
 
-        public void GenerateHiddenLayer(Random random)
+        public void GenerateHiddenLayer()
         {
-            var weightForHiddenNeuron = NextDouble(random, 0, 1);
-            HiddenNeuronX = new Neuron
-            {
-                Value = (NeuronX.Value * NeuronX.WeightX + NeuronY.Value - NeuronY.WeightX).Sigmoid(),
-                WeightX = weightForHiddenNeuron,
-                WeightY = weightForHiddenNeuron
-            };
-            weightForHiddenNeuron = NextDouble(random, 0, 1);
-            HiddenNeuronY = new Neuron
-            {
-                Value = (NeuronX.Value * NeuronX.WeightY + NeuronY.Value - NeuronY.WeightY).Sigmoid(),
-                WeightX = weightForHiddenNeuron,
-                WeightY = weightForHiddenNeuron
-            };
+            HiddenNeuronX.Value = ((NeuronX.Value * NeuronX.WeightX) + (NeuronY.Value * NeuronY.WeightX)).Sigmoid();
+            HiddenNeuronY.Value = ((NeuronX.Value * NeuronX.WeightY) + (NeuronY.Value * NeuronY.WeightY)).Sigmoid();
         }
 
         public void AdjustWeights()
         {
-            NeuronX.WeightX = NeuronX.WeightX +
-                              (0.2 * RosenBack - OutputNeuron.Value) * NeuronX.Value *
-                              HiddenNeuronX.Value * (1 - HiddenNeuronX.Value);
-            NeuronX.WeightY = NeuronX.WeightY +
-                              (0.2 * RosenBack - OutputNeuron.Value) * NeuronX.Value *
-                              HiddenNeuronY.Value * (1 - HiddenNeuronY.Value);
+            NeuronX.WeightX +=
+                (0.2 * RosenBack - OutputNeuron.Value) * NeuronX.Value *
+                HiddenNeuronX.Value * (1 - HiddenNeuronX.Value);
 
-            NeuronY.WeightX = NeuronY.WeightX +
-                              (0.2 * RosenBack - OutputNeuron.Value) * NeuronY.Value *
-                              HiddenNeuronX.Value * (1 - HiddenNeuronX.Value);
-            NeuronY.WeightY = NeuronY.WeightY +
-                              (0.2 * RosenBack - OutputNeuron.Value) * NeuronY.Value *
-                              HiddenNeuronY.Value * (1 - HiddenNeuronY.Value);
+            NeuronX.WeightY +=
+                (0.2 * RosenBack - OutputNeuron.Value) * NeuronX.Value *
+                HiddenNeuronY.Value * (1 - HiddenNeuronY.Value);
+
+            NeuronY.WeightX +=
+                (0.2 * RosenBack - OutputNeuron.Value) * NeuronY.Value *
+                HiddenNeuronX.Value * (1 - HiddenNeuronX.Value);
+
+            NeuronY.WeightY +=
+                (0.2 * RosenBack - OutputNeuron.Value) * NeuronY.Value *
+                HiddenNeuronY.Value * (1 - HiddenNeuronY.Value);
 
             HiddenNeuronX.WeightX =
                 HiddenNeuronX.WeightY =
@@ -160,9 +165,9 @@ namespace BackPropagationAlgorithm.Classes
                 {
                     _value = _higherRange;
                 }
-                else if (value < -_lowerRange)
+                else if (value < _lowerRange)
                 {
-                    _value = -_lowerRange;
+                    _value = _lowerRange;
                 }
                 else
                 {
@@ -226,7 +231,8 @@ namespace BackPropagationAlgorithm.Classes
     {
         public static double Sigmoid(this double self)
         {
-            return (1 / (1 + Math.Pow(Math.E, (-1 * self))));
+            var x = (1 / (1 + Math.Pow(Math.E, (-1 * self))));
+            return x;
         }
     }
 }
